@@ -1,6 +1,8 @@
 import os
+import sys
+sys.path.append("..")
 from PyQt5 import QtCore, QtGui, QtWidgets
-from backend import inserta_animal
+from backend.backend import inserta_animal
 
 nombre_base_datos = 'animales.db'
 

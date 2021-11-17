@@ -1,13 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PIL import Image
 import io
-from backend import obten_imagenes
+#from backend import obten_imagenes
 
 
 class Ui_MainWindow(object):
     def __init__(self):
         print("Abriendo la aplicación")
-        self.imagenes = obten_imagenes("animales.db")
+        #self.imagenes = obten_imagenes("animales.db")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -118,6 +118,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    ui.iniciaMosaico()
+    #ui.iniciaMosaico()
     MainWindow.show()
     sys.exit(app.exec_())

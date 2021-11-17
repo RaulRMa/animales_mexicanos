@@ -1,15 +1,17 @@
 import sqlite3
 import time
 from sqlite3 import Error
+import os.path
 
 animal = 1
-db = 'animales.db'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "animales.db")
 
 def crea_conexion(db):
     """Crea una conexión con la base de datos SQLite"""
     con = None
     try:
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(db_path)
         print("Conexion creada con exito: %s"%(db))
         return con
     except Error as e:
@@ -34,7 +36,7 @@ def crea_tabla(conexion):
 
 def obten_informacion(animal,db):
     con = crea_conexion(db)
-    query = """SELECT * from animales WHERE id = ?"""
+    query = """SELECT * from animales_db WHERE id = ?"""
     cur = con.cursor()
     result = cur.execute(query,(animal,))
     result = result.fetchone()
@@ -50,7 +52,7 @@ def obten_informacion(animal,db):
 
 def inserta_animal(animal, db):
     con = crea_conexion(db)
-    query = ''' INSERT INTO animales (nombre,descripcion,tipo,imagen)
+    query = ''' INSERT INTO animales_db (nombre,descripcion,tipo,imagen)
 	VALUES (?,?,?,?) '''
     img = convertToBinaryData(animal["imagen"])
     try:
@@ -65,9 +67,14 @@ def inserta_animal(animal, db):
         print("Ocurrió un error al intentar insertar en la base de datos")
         print(e)
 
+def elimina_animal(animal = 1, db = None):
+    con = crea_conexion(db)
+    print("Eliminando al animal en el backend")
+    #query = ''' Delete  '''
+
 def obten_imagenes(db):
     con = crea_conexion(db)
-    query = ''' SELECT imagen from animales WHERE imagen IS NOT NULL '''
+    query = ''' SELECT imagen, id from animales_db WHERE imagen IS NOT NULL '''
     try:
         cur = con.cursor()
         result = cur.execute(query).fetchall()
@@ -82,4 +89,3 @@ def convertToBinaryData(filename):
         blobData = file.read()
     return blobData
 
-obten_informacion(animal,db)
