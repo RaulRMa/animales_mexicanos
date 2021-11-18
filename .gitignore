@@ -4,3 +4,4 @@
 *.jpeg
 /animales-venv/Include
 /animales-venv/Lib
+/backend/__pycache__

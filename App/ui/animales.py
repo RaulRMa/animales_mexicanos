@@ -10,16 +10,16 @@ from PIL import Image
 
 nombre_base_datos = 'animales.db'
 class Ui_AnimalesMexicanos(QtWidgets.QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self,idImagen, parent=None,):
         super(Ui_AnimalesMexicanos, self).__init__(parent)
-        
         self.nombre = ''
         self.nombreCientifico = ''
         self.tipo = ''
         self.descripcion = ''
         self.imagen = ''
+        self.idAnimal = idImagen
         self.setupUi()
-        self.idAnimal = 2
+        self.obtenAnimal()
     
     def setupUi(self):
         self.setObjectName("AnimalesMexicanos")
@@ -78,9 +78,7 @@ class Ui_AnimalesMexicanos(QtWidgets.QMainWindow):
 
 
     def obtenAnimal(self):
-        print("Abriendo la ventana de detalles")
         self.resultado = obten_informacion(self.idAnimal, nombre_base_datos)
-        print("Este es el id del animal a buscar: %d"%(self.idAnimal))
         self.nombre.setText("Nombre: %s"%(self.resultado['nombre']))
         self.tipo.setText("Tipo: %s"%(self.resultado['tipo']))
         self.descripcion.setText(self.resultado['descripcion'])
@@ -96,13 +94,3 @@ class Ui_AnimalesMexicanos(QtWidgets.QMainWindow):
         self.ui.setupUi(self.ventanaAgregar)
         self.ventanaAgregar.show()
 
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    AnimalesMexicanos = QtWidgets.QMainWindow()
-    ui = Ui_AnimalesMexicanos()
-    ui.setupUi()
-    ui.obtenAnimal()
-    AnimalesMexicanos.show()
-    sys.exit(app.exec_())
